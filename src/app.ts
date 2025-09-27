@@ -3,6 +3,7 @@ import express, { Express } from "express";
 import morgan from "morgan";
 
 import employeesRoutes from "./api/v1/routes/employees";
+import branchesRoutes from "./api/v1/routes/branches";
 
 const app: Express = express();
 
@@ -21,6 +22,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api/v1/employees", employeesRoutes)
+app.use("/api/v1/branches", branchesRoutes)
 
 const server: Server = app.listen(PORT, '0.0.0.0', 0, () => {
     console.log(`Server is running on port ${PORT}`);
