@@ -93,3 +93,33 @@ export const deleteEmployee = (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getEmployeesByBranch = (req: Request, res: Response) => {
+  try {
+    const branchId = parseInt(req.params.branchId);
+    
+    if (isNaN(branchId)) {
+      return res.status(400).json({ error: 'Invalid branch ID' });
+    }
+
+    const employees = employeeService.getEmployeesByBranch(branchId);
+    res.status(200).json(employees);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getEmployeesByDepartment = (req: Request, res: Response) => {
+  try {
+    const department = req.params.department;
+    
+    if (!department || department.trim() === '') {
+      return res.status(400).json({ error: 'Department parameter is required' });
+    }
+
+    const employees = employeeService.getEmployeesByDepartment(department);
+    res.status(200).json(employees);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
