@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Cusiokhale/pixell-river-financial#readme",
   "devDependencies": {
+    "@types/morgan": "^1.9.10",
     "@types/node": "^24.5.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
