@@ -3,13 +3,14 @@ import express, { Express } from "express";
 
 const app: Express = express();
 
-const PORT: number = parseInt(process.env.PORT || '3000');
+const PORT: number = parseInt(process.env.PORT || '3003');
 
-app.get("/", (req, res) => {
-    res.send("Hello, Cordilia!");
+// I had to add an underscore infront of req to stop the TS errors
+app.get("/", (_req, res) => {
+    res.send("Hello, Cordelia!");
 });
 
-app.get("/health", (req, res) => {
+app.get("/health", (_req, res) => {
     res.json({
         status: "OK"
     });
