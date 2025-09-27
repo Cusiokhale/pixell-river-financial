@@ -6,6 +6,27 @@ interface Employee {
   email: string;
   phone: string;
   branchId: number;
+
+  [key: string]: any;
+}
+
+
+export interface CreateEmployeeRequest {
+  name: string;
+  position: string;
+  department: string;
+  email: string;
+  phone: string;
+  branchId: number;
+}
+
+export interface UpdateEmployeeRequest {
+  name?: string;
+  position?: string;
+  department?: string;
+  email?: string;
+  phone?: string;
+  branchId?: number;
 }
 
 // All employees!
