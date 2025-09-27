@@ -153,3 +153,65 @@ describe('Employee Routes Tests', () => {
         });
     });
 });
+
+
+  describe('Get All Employees for a Branch - GET /api/employees/branches/:branchId', () => {
+    it('should successfully retrieve all employees for a specific branch', async () => {
+      const response = await request(app)
+        .get('/api/employees/branches/1')
+        .expect(200);
+
+      expect(Array.isArray(response.body)).toBe(true);
+      expect(response.body).toHaveLength(3); // Alice, Maria, James are in branch 1
+      
+      // Verify all returned employees belong to branch 1
+      response.body.forEach((employee: any) => {
+        expect(employee.branchId).toBe(1);
+        expect(employee).toHaveProperty('id');
+        expect(employee).toHaveProperty('name');
+        expect(employee).toHaveProperty('position');
+        expect(employee).toHaveProperty('department');
+        expect(employee).toHaveProperty('email');
+        expect(employee).toHaveProperty('phone');
+      });
+    });
+
+    it('should return 400 when branch ID parameter is missing or invalid', async () => {
+      const response = await request(app)
+        .get('/api/employees/branches/invalid')
+        .expect(400);
+
+      expect(response.body).toHaveProperty('error');
+      expect(response.body.error).toBe('Invalid branch ID');
+    });
+  });
+
+  describe('Get Employees by Department - GET /api/departments/:department/employees', () => {
+    it('should successfully retrieve all employees for a specific department', async () => {
+      const response = await request(app)
+        .get('/api/employees/departments/management')
+        .expect(200);
+
+      expect(Array.isArray(response.body)).toBe(true);
+      expect(response.body).toHaveLength(2); // Alice and Linda are in Management
+      
+      response.body.forEach((employee: any) => {
+        expect(employee.department.toLowerCase()).toBe('management');
+        expect(employee).toHaveProperty('id');
+        expect(employee).toHaveProperty('name');
+        expect(employee).toHaveProperty('position');
+        expect(employee).toHaveProperty('email');
+        expect(employee).toHaveProperty('phone');
+        expect(employee).toHaveProperty('branchId');
+      });
+    });
+
+    it('should return 400 when department parameter is missing or invalid', async () => {
+      const response = await request(app)
+        .get('/api/employees/departments/')
+        .expect(400);
+
+      expect(response.body).toHaveProperty('error');
+      expect(response.body.error).toBe('Department parameter is required');
+    });
+  });
