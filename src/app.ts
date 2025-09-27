@@ -4,9 +4,9 @@ import morgan from "morgan";
 
 const app: Express = express();
 
-app.use(morgan("combined"));
-
 const PORT: number = parseInt(process.env.PORT || '3003');
+
+app.use(morgan("combined"));
 
 // I had to add an underscore infront of req to stop the TS errors
 app.get("/", (_req, res) => {
@@ -14,9 +14,7 @@ app.get("/", (_req, res) => {
 });
 
 app.get("/health", (_req, res) => {
-    res.json({
-        status: "OK"
-    });
+    res.send("Server is healthy")
 });
 
 const server: Server = app.listen(PORT, '0.0.0.0', 0, () => {
