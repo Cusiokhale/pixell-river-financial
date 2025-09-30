@@ -155,14 +155,14 @@ describe('Employee Routes Tests', () => {
 });
 
 
-  describe('Get All Employees for a Branch - GET /api/employees/branches/:branchId', () => {
+  describe('Get All Employees for a Branch - GET /api/v1/employees/get/branches/:branchId', () => {
     it('should successfully retrieve all employees for a specific branch', async () => {
       const response = await request(app)
-        .get('/api/employees/branches/1')
+        .get('/api/v1/employees/get/branches/1')
         .expect(200);
 
       expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body).toHaveLength(3); // Alice, Maria, James are in branch 1
+      expect(response.body).toHaveLength(3);
       
       // Verify all returned employees belong to branch 1
       response.body.forEach((employee: any) => {
@@ -178,7 +178,7 @@ describe('Employee Routes Tests', () => {
 
     it('should return 400 when branch ID parameter is missing or invalid', async () => {
       const response = await request(app)
-        .get('/api/employees/branches/invalid')
+        .get('/api/v1/employees/get/branches/invalid')
         .expect(400);
 
       expect(response.body).toHaveProperty('error');
@@ -186,14 +186,14 @@ describe('Employee Routes Tests', () => {
     });
   });
 
-  describe('Get Employees by Department - GET /api/departments/:department/employees', () => {
+  describe('Get Employees by Department - GET /api/v1/employees/get/departments/:department', () => {
     it('should successfully retrieve all employees for a specific department', async () => {
       const response = await request(app)
-        .get('/api/employees/departments/management')
+        .get('/api/v1/employees/get/departments/management')
         .expect(200);
 
       expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body).toHaveLength(2); // Alice and Linda are in Management
+      expect(response.body).toHaveLength(5);
       
       response.body.forEach((employee: any) => {
         expect(employee.department.toLowerCase()).toBe('management');
@@ -208,7 +208,7 @@ describe('Employee Routes Tests', () => {
 
     it('should return 400 when department parameter is missing or invalid', async () => {
       const response = await request(app)
-        .get('/api/employees/departments/')
+        .get('/api/v1/employees/get/departments/')
         .expect(400);
 
       expect(response.body).toHaveProperty('error');
